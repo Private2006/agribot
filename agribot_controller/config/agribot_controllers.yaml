@@ -1,0 +1,75 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100 # Hz
+    use_sim_time: true
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    simple_velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+    agribot_diff_controller:
+      type: diff_drive_controller/DiffDriveController
+
+simple_velocity_controller:
+  ros__parameters:
+    joints:
+    - rfw_joint # The order of the joints here matters
+    - rrw_joint
+    - lfw_joint
+    - lrw_joint
+
+# --------------------------------------------------------------------------
+# BumperBot Differential Drive Controller Configuration
+# --------------------------------------------------------------------------
+agribot_diff_controller:
+  ros__parameters:
+    type: diff_drive_controller/DiffDriveController
+    use_stamped_vel: true
+
+    # --------------------------------------------------------
+    # MODIFICATION for 4-WHEEL DIFFERENTIAL DRIVE
+    # Add front and rear wheel joints to the respective sides.
+    # The diff_drive_controller will average the joint efforts/commands
+    # and use the first joint for odometry calculations.
+    # --------------------------------------------------------
+    left_wheel_names: [ 'lfw_joint', 'lrw_joint' ] ##I'll edit the urdf in future
+    right_wheel_names: [ 'rfw_joint', 'rrw_joint' ] ##I'll edit the urdf in future
+
+    publish_rate: 50.0
+    pose_covariance_diagonal: [ 0.001, 0.001, 1e-3, 1e-3, 1e-3, 0.01 ]
+    twist_covariance_diagonal: [ 0.001, 0.001, 1e-3, 1e-3, 1e-3, 0.01 ]
+
+    wheel_separation: 0.22 # Distance between the left and right wheel centerlines (track width)
+    wheel_radius: 0.07
+    wheels_per_side: 2 # Optional, but useful for 4-wheel setups
+    wheel_separation_multiplier: 1.0
+    left_wheel_radius_multiplier: 1.0
+    right_wheel_radius_multiplier: 1.0
+
+    cmd_vel_timeout: 0.5
+
+    base_frame_id: base_footprint # default: base_link
+
+    publish_limited_velocity: true
+
+    publish_wheel_data: true
+
+    enable_odom_tf: true
+
+    # Velocity and acceleration limits (no change needed here)
+    linear:
+      x:
+        has_velocity_limits: true
+        max_velocity: 2.0 # m/s
+        min_velocity: -2.1 # m/s
+        has_acceleration_limits: true
+        max_acceleration: 2.0 # m/s^2
+        min_acceleration: -2.1 # m/s^2
+    angular:
+      z:
+        has_velocity_limits: true
+        max_velocity: 3.0 # rad/s
+        has_acceleration_limits: true
+        max_acceleration: 3.0 # rad/s^2

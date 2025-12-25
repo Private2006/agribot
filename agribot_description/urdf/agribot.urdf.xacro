@@ -1,0 +1,268 @@
+<?xml version="1.0" ?>
+<robot name="agribot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find agribot_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find agribot_description)/urdf/agribot_ros2_control.xacro" />
+<xacro:include filename="$(find agribot_description)/urdf/agribot_gazebo.xacro" />
+
+<!-- Scaling factor: 2.143 -->
+<!-- Linear dimensions: multiply by 2.143 -->
+<!-- Mass: multiply by 2.143^3 = 9.844 -->
+<!-- Inertia: multiply by 2.143^5 = 45.184 -->
+
+<!-- New base footprint at ground level -->
+<link name="base_footprint"/>
+
+<!-- Joint to raise the robot by 0.075005 (0.035 * 2.143) -->
+<joint name="base_footprint_joint" type="fixed">
+  <origin xyz="0 0 0.075005" rpy="0 0 3.141593"/>
+  <parent link="base_footprint"/>
+  <child link="base_link"/>
+</joint>
+
+<link name="base_link">
+  <inertial>
+    <origin xyz="-0.000001684 0.0 0.053505" rpy="0 0 0"/>
+    <mass value="10.0"/>
+    <inertia ixx="0.195" iyy="0.354" izz="0.530" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/base_link.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+    <material name="orange"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/base_link.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="right_rear_wheel_1">
+  <inertial>
+    <origin xyz="-0.000032274 -0.001599 0.000421" rpy="0 0 0"/>
+    <mass value="3.0"/>
+    <inertia ixx="0.00692" iyy="0.01081" izz="0.00692" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.199299 0.27859 -0.012858" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/right_rear_wheel_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <origin xyz="0.199299 0.27859 -0.012858" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/right_rear_wheel_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="right_front_wheel_1">
+  <inertial>
+    <origin xyz="-0.000032268 -0.001599 0.000421" rpy="0 0 0"/>
+    <mass value="3.0"/>
+    <inertia ixx="0.00692" iyy="0.01081" izz="0.00692" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.197156 0.27859 -0.012858" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/right_front_wheel_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.197156 0.27859 -0.012858" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/right_front_wheel_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="left_rear_wheel_1">
+  <inertial>
+    <origin xyz="-0.000032274 0.001599 -0.000421" rpy="0 0 0"/>
+    <mass value="3.0"/>
+    <inertia ixx="0.00692" iyy="0.01081" izz="0.00692" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.199299 -0.27859 -0.012858" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/left_rear_wheel_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <origin xyz="0.199299 -0.27859 -0.012858" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/left_rear_wheel_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="left_front_wheel_1">
+  <inertial>
+    <origin xyz="-0.000032268 0.001599 -0.000421" rpy="0 0 0"/>
+    <mass value="3.0"/>
+    <inertia ixx="0.00692" iyy="0.01081" izz="0.00692" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.197156 -0.27859 -0.012858" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/left_front_wheel_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.197156 -0.27859 -0.012858" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/left_front_wheel_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Camera_1">
+  <inertial>
+    <origin xyz="0.040985 0.035627 0.073511" rpy="0 0 0"/>
+    <mass value="0.200"/>
+    <inertia ixx="0.000193" iyy="0.000199" izz="0.000199" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.308151 -0.014462 -0.037991" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/Camera_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+    <material name="gray"/>
+  </visual>
+  <collision>
+    <origin xyz="0.308151 -0.014462 -0.037991" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/Camera_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Camera_2">
+  <inertial>
+    <origin xyz="0.041071 -0.060820 0.073511" rpy="0 0 0"/>
+    <mass value="0.200"/>
+    <inertia ixx="0.000193" iyy="0.000199" izz="0.000199" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.308151 -0.014462 -0.037991" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/Camera_2.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+    <material name="gray"/>
+  </visual>
+  <collision>
+    <origin xyz="0.308151 -0.014462 -0.037991" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/Camera_2.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="laser_link">
+  <inertial>
+    <origin xyz="-0.021430 0.010715 -0.042860" rpy="0 0 3.141593"/>
+    <mass value="0.2"/>
+    <inertia ixx="0.000385" iyy="0.000786" izz="0.000891" ixy="0.000065" iyz="-0.000025" ixz="0.000148"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.021430 0.010715 -0.203585" rpy="0 0 3.141593"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/LIDAR_X4_PRO_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+    <material name="charcoal_black"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.021430 0.010715 -0.203585" rpy="0 0 3.141593"/>
+    <geometry>
+      <mesh filename="file://$(find agribot_description)/meshes/LIDAR_X4_PRO_1.stl" scale="0.002143 0.002143 0.002143"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="rfw_joint" type="continuous">
+  <origin xyz="-0.199299 -0.27859 0.012858" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="right_rear_wheel_1"/>
+  <axis xyz="0.0 -1.0 0.0"/>
+</joint>
+
+<joint name="rrw_joint" type="continuous">
+  <origin xyz="0.197156 -0.27859 0.012858" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="right_front_wheel_1"/>
+  <axis xyz="0.0 -1.0 0.0"/>
+</joint>
+
+<joint name="lfw_joint" type="continuous">
+  <origin xyz="-0.199299 0.27859 0.012858" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="left_rear_wheel_1"/>
+  <axis xyz="0.0 -1.0 0.0"/>
+</joint>
+
+<joint name="lrw_joint" type="continuous">
+  <origin xyz="0.197156 0.27859 0.012858" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="left_front_wheel_1"/>
+  <axis xyz="0.0 -1.0 0.0"/>
+</joint>
+
+
+<joint name="camera_1_joint" type="fixed">
+  <origin xyz="-0.308151 0.014462 0.037991" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="Camera_1"/>
+</joint>
+
+<joint name="camera_2_joint" type="fixed">
+  <origin xyz="-0.308151 0.014462 0.037991" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="Camera_2"/>
+</joint>
+
+<joint name="lidar_joint" type="fixed">
+  <origin xyz="0.0 0.0 0.165011" rpy="0 0 3.141593"/>
+  <parent link="base_link"/>
+  <child link="laser_link"/>
+</joint>
+
+<!-- IMU Link -->
+<link name="imu_link">
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="0.001"/>
+    <inertia ixx="0.000001" ixy="0.0" ixz="0.0"
+             iyy="0.000001" iyz="0.0"
+             izz="0.000001"/>
+  </inertial>
+  <!-- No visual element - IMU is inside base_link -->
+  <!-- Optional: Add a small box for visualization in RViz if needed -->
+  <!--
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.01 0.01 0.01"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  -->
+</link>
+
+<joint name="imu_joint" type="fixed">
+  <origin xyz="0.1 0 0.05" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="imu_link"/>
+</joint>
+
+</robot>
+
+<!-- Note that the wheel names are mixed because of a mistake in the naming when designed in Fusion360 -->
