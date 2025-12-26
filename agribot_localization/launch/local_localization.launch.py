@@ -6,12 +6,33 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
+    # Connect base_footprint_ekf to base_footprint (your robot's visual model)
+    ekf_to_base = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        arguments=["--x", "0", "--y", "0", "--z", "0",
+                   "--qx", "0", "--qy", "0", "--qz", "0", "--qw", "1",
+                   "--frame-id", "base_footprint_ekf",
+                   "--child-frame-id", "base_footprint"],
+    )
+    
+    # Connect EKF odometry frame to robot's odom frame
+    # odom_to_odom_ekf = Node(
+    #     package="tf2_ros",
+    #     executable="static_transform_publisher",
+    #     arguments=["--x", "0", "--y", "0", "--z", "0",
+    #                "--qx", "0", "--qy", "0", "--qz", "0", "--qw", "1",
+    #                "--frame-id", "odom",
+    #                "--child-frame-id", "base_footprint_ekf"],
+    # )
+    
+    # Your existing static transform
     static_transform_publisher = Node(
         package="tf2_ros",
         executable="static_transform_publisher",
         arguments=["--x", "0", "--y", "0","--z", "0.103",
                    "--qx", "1", "--qy", "0", "--qz", "0", "--qw", "0",
-                   "--frame-id", "base_footprint",
+                   "--frame-id", "base_footprint_ekf",
                    "--child-frame-id", "imu_link_ekf"],
     )
 
@@ -28,9 +49,10 @@ def generate_launch_description():
         executable="imu_republisher.py",
     )
     
-    
     return LaunchDescription(
         [
+            ekf_to_base,
+            # odom_to_odom_ekf,  # Add this
             static_transform_publisher,
             robot_localization,
             imu_republisher_py
