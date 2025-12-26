@@ -123,7 +123,8 @@ class FourWheelDifferentialController(Node):
         fi_right = dp_right / dt_sec
         
         linear = (self.wheel_radius_ * fi_right + self.wheel_radius_ * fi_left) / 2
-        angular = (self.wheel_radius_ * fi_left - self.wheel_radius_ * fi_right) / self.wheel_separation_
+        angular = (self.wheel_radius_ * fi_right - self.wheel_radius_ * fi_left) / self.wheel_separation_
+
         
         # ✅ CRITICAL: Update previous values for next callback
         self.left_wheel_prev_pos_ = msg.position[2]
@@ -132,7 +133,7 @@ class FourWheelDifferentialController(Node):
         
         # Calculate odometry increments using position deltas (not velocities!)
         d_s = (self.wheel_radius_ / 2) * (dp_right + dp_left)
-        d_theta = (self.wheel_radius_ / self.wheel_separation_) * (-dp_right + dp_left)
+        d_theta = (self.wheel_radius_ / self.wheel_separation_) * (dp_right - dp_left)
         
         # Update pose
         self.theta_ += d_theta
