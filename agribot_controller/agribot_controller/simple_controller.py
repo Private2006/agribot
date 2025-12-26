@@ -159,7 +159,7 @@ class FourWheelDifferentialController(Node):
         self.odom_pub_.publish(self.odom_msg_)
         
         # ← NEW: Broadcast TF transform
-        self.broadcast_tf(current_time, q)
+        # self.broadcast_tf(current_time, q)
         
         # self.get_logger().info(f"Linear: {linear:.3f}, Angular: {angular:.3f}")
         # self.get_logger().info(f"x: {self.x_:.3f}, y: {self.y_:.3f}, theta: {self.theta_:.3f}")
